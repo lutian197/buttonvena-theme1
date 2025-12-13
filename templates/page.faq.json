@@ -1,0 +1,284 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "name": "Title",
+          "settings": {
+            "text": "<p><br/>Welcome to the Button Vena FAQ. If you can't find the answer you're looking for, feel free to reach out—we’re here to help.<br/><br/></p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "h4",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground-heading)",
+            "background": true,
+            "background_color": "#1ba4b77d",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "accordion_XRiFce": {
+          "type": "accordion",
+          "name": "t:names.accordion",
+          "settings": {
+            "icon": "caret",
+            "dividers": true,
+            "type_preset": "h4",
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "accordion_row_Kzw3mj": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "Shipping & Delivery",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 164
+              },
+              "blocks": {
+                "text_trKdJN": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<ul><li><strong>Where do you ship?</strong><br/>We currently ship <strong>within the United States only</strong>.</li></ul><p></p><ul><li><strong>Where do orders ship from?</strong><br/>All orders are shipped from <strong>Boston, Massachusetts</strong>.</li></ul><p></p><ul><li><strong>When will my order ship?</strong><br/>Orders are typically processed within <strong>1–2 business days</strong>. Once shipped, you will receive a confirmation email with a USPS tracking number.</li></ul><p></p><ul><li><strong>How long does delivery take?</strong><br/>Most orders arrive within <strong>3–7 business days</strong>, depending on your location and USPS transit times.<br/>Please note: holiday seasons or carrier delays may extend delivery times.</li></ul><p></p><ul><li><strong>Which carrier do you use?</strong><br/>All orders are shipped via <strong>USPS</strong>.</li></ul><p></p><ul><li><strong>What if my package is delayed or missing?</strong><br/>If your order hasn’t arrived within the expected timeframe, please contact us with your order number. We’ll help you track the shipment or arrange a solution.</li></ul>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "paragraph",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_trKdJN"
+              ]
+            },
+            "accordion_row_UdYaDY": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "Orders & Payments",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_pxA3aM": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<ul><li><strong>Which payment methods do you accept?</strong><br/>We accept major credit cards, Shop Pay, Apple Pay, Google Pay, and other secure payment methods available at checkout.</li></ul><p></p><ul><li><strong>Is my payment information secure?</strong><br/>Yes. All payments are processed through secure, SSL-encrypted, PCI-compliant platforms. We never store your full card details.</li></ul><p></p><ul><li><strong>I didn’t receive my order confirmation email—what should I do?</strong><br/>Please check your spam or promotions folder first. If you still can’t find the email, contact us and we’ll resend your order confirmation.</li></ul>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_pxA3aM"
+              ]
+            },
+            "accordion_row_FA9xHw": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Returns & Exchanges",
+                "open_by_default": true,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_nt3kQn": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<ul><li><strong>Do you accept returns or exchanges?</strong><br/>Yes. We accept returns or exchanges on <strong>unused items</strong> in their original condition and packaging. Please contact us within <strong>14 days</strong> of delivery to begin the process.</li></ul><p></p><ul><li><strong>How do I start a return?</strong><br/>Email us with your order number and reason for return. We’ll provide instructions for sending your item back.</li></ul><p></p><ul><li><strong>Who pays for return shipping?</strong><br/>Return shipping is typically the responsibility of the customer, unless the item arrived damaged or incorrect.</li></ul><p></p><ul><li><strong>When will I receive my refund?</strong><br/>Once we receive and inspect the returned item, refunds are issued to the original payment method within <strong>5–7 business days</strong>.</li></ul>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_nt3kQn"
+              ]
+            },
+            "accordion_row_LTHUcH": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "Product Information",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_iyXKzL": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<ul><li><strong>What materials are your button covers made from?</strong><br/>Our button covers are crafted from a variety of high-quality materials, including <strong>copper plated with 14k/18k/22k gold</strong>, copper, stainless steel, zircon stones, and faux pearls.<br/>The exact materials used for each design will be clearly listed in the <strong>product specifications</strong> on each product page.</li></ul><p></p><ul><li><strong>How do I use button covers?</strong><br/>Slide the clasp over your shirt button and let it click into place—no sewing or tools required.</li></ul><p></p><ul><li><strong>How many button covers come in a set?</strong><br/>Most sets include <strong>two pieces (a pair)</strong> unless otherwise noted.</li></ul><p></p><ul><li><strong>Can I mix and match different designs?</strong><br/>Absolutely. Our designs are made to be mixed and matched so you can express your unique style.</li></ul>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#36181826",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_iyXKzL"
+              ]
+            },
+            "accordion_row_h4pmtL": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Other Questions",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_eYbFrt": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<ul><li><strong>How can I contact customer support?</strong><br/>You can reach us anytime at: Support@buttonvena.com.</li></ul><p></p><ul><li><strong>Do you have a physical store?</strong><br/>Not yet—we currently operate online only.</li></ul><p></p><ul><li><strong>Do you offer wholesale?</strong><br/>Yes. For wholesale inquiries, please contact us with your store details.</li></ul><p></p><ul><li><strong>Still need help?</strong><br/>We’re always here to assist—feel free to reach out.</li></ul>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_eYbFrt"
+              ]
+            }
+          },
+          "block_order": [
+            "accordion_row_Kzw3mj",
+            "accordion_row_UdYaDY",
+            "accordion_row_FA9xHw",
+            "accordion_row_LTHUcH",
+            "accordion_row_h4pmtL"
+          ]
+        }
+      },
+      "block_order": [
+        "heading",
+        "accordion_XRiFce"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
