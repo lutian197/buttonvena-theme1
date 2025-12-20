@@ -3673,22 +3673,24 @@ slideshow-component[autoplay] slideshow-controls {
 
 .slideshow-controls__thumbnails {
   display: inline-flex;
-  padding-inline: var(--slideshow-thumbnails-padding-inline, var(--padding-sm));
+  /* padding-inline: var(--slideshow-thumbnails-padding-inline, var(--padding-sm)); */
   padding-block: var(--slideshow-thumbnails-padding-block, var(--padding-sm));
-  gap: var(--gap-xs);
+  padding-inline-end: var(--padding-lg); /* 添加右侧 padding 防止边框被裁剪 */
+  gap: var(--gap-lg);
   margin-inline: auto;
   height: fit-content;
 
   .slideshow-control {
-    border-radius: var(--media-radius);
-    width: clamp(44px, 7vw, var(--thumbnail-width));
+    border-radius: 4px;
+    /* width: clamp(44px, 7vw, var(--thumbnail-width)); */
+    width: clamp(44px, 7vw, 54px);
     height: auto;
     aspect-ratio: var(--aspect-ratio);
 
     img {
       height: 100%;
       object-fit: cover;
-      border-radius: var(--media-radius);
+      border-radius: 4px;
     }
 
     &:is([aria-selected='true']) {
