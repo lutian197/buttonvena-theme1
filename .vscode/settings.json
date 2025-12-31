@@ -1,0 +1,27 @@
+{
+  // Liquid 文件关联
+  "files.associations": {
+    "*.liquid": "liquid"
+  },
+
+  // 编辑器设置
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Liquid 特定设置
+  "[liquid]": {
+    "editor.defaultFormatter": "Shopify.theme-check-vscode",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+
+  // Theme Check 设置
+  "themeCheck.languageServer": true,
+  "themeCheck.only": false,
+
+  // 文件排除（可选）
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true
+  }
+}

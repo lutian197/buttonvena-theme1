@@ -308,6 +308,21 @@
       "in_cart": "in cart"
     }
   },
+  "pages": {
+    "track_order": {
+      "title": "Track Your Order",
+      "order_number": "Order Number",
+      "order_number_placeholder": "Enter order number",
+      "email_or_phone": "Email or Phone Number",
+      "email_placeholder": "Enter your email or phone number",
+      "email": "Email",
+      "submit": "TRACK",
+      "error_required": "Please fill in all required fields.",
+      "result_heading": "Order Information",
+      "redirect_note": "Redirecting to order status page...",
+      "setup_required": "Order tracking requires integration with Shopify Order Status API or a third-party service. Please contact support for assistance."
+    }
+  },
   "pagefly": {
     "products": {
       "product": {

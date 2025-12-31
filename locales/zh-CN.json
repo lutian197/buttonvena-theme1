@@ -308,6 +308,21 @@
       "success": "评论已发布"
     }
   },
+  "pages": {
+    "track_order": {
+      "title": "追踪您的订单",
+      "order_number": "订单号",
+      "order_number_placeholder": "请输入订单号",
+      "email_or_phone": "邮箱或手机号",
+      "email_placeholder": "请输入您的邮箱或手机号",
+      "email": "邮箱",
+      "submit": "查询",
+      "error_required": "请填写所有必填字段。",
+      "result_heading": "订单信息",
+      "redirect_note": "正在跳转到订单状态页面...",
+      "setup_required": "订单追踪功能需要集成 Shopify 订单状态 API 或第三方服务。请联系客服获取帮助。"
+    }
+  },
   "pagefly": {
     "products": {
       "product": {

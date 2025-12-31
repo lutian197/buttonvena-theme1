@@ -1,0 +1,226 @@
+{%- doc -%}
+  Renders an order tracking form and results.
+  
+  Usage in custom-liquid block:
+  {% render 'track-order' %}
+{%- enddoc -%}
+
+{%- liquid
+  if section.id
+    assign form_id = 'TrackOrderForm-' | append: section.id
+  else
+    assign form_id = 'TrackOrderForm'
+  endif
+  assign order_number = request.params.order_number
+  assign email = request.params.email
+-%}
+
+<div class="track-order">
+  <div class="track-order__card">
+    <h2 class="track-order__heading">{{ 'pages.track_order.title' | t | default: 'Track Your Order' }}</h2>
+
+    {%- form 'contact', id: form_id, class: 'track-order__form' -%}
+      <div class="track-order__form-row">
+        <label for="{{ form_id }}-order-number" class="track-order__label">
+          {{ 'pages.track_order.order_number' | t | default: 'Order Number' }}
+        </label>
+        <input
+          type="text"
+          id="{{ form_id }}-order-number"
+          name="order_number"
+          class="track-order__input"
+          value="{{ order_number }}"
+          required
+        >
+      </div>
+
+      <div class="track-order__form-row">
+        <label for="{{ form_id }}-email" class="track-order__label">
+          {{ 'pages.track_order.email_or_phone' | t | default: 'Email or Phone Number' }}
+        </label>
+        <input
+          type="email"
+          id="{{ form_id }}-email"
+          name="email"
+          class="track-order__input"
+          value="{{ email }}"
+          required
+        >
+      </div>
+      <div class="submit__wrapper">
+        <button type="submit" class="track-order__submit button">
+          {{ 'pages.track_order.submit' | t | default: 'TRACK' }}
+        </button>
+      </div>
+    {%- endform -%}
+
+    {%- comment -%}
+      Order tracking results will be displayed here.
+      You can integrate with Shopify Order Status API or a third-party tracking service.
+    {%- endcomment -%}
+    {%- if order_number != blank and email != blank -%}
+      <div id="track-order-results" class="track-order__results">
+        <div class="track-order__result">
+          <h3>{{ 'pages.track_order.result_heading' | t | default: 'Order Information' }}</h3>
+          <p>
+            <strong>{{ 'pages.track_order.order_number' | t | default: 'Order Number' }}:</strong> {{ order_number }}
+          </p>
+          <p>
+            <strong>{{ 'pages.track_order.email' | t | default: 'Email' }}:</strong> {{ email }}
+          </p>
+          <p class="track-order__note">
+            {{ 'pages.track_order.redirect_note' | t | default: 'Redirecting to order status page...' }}
+          </p>
+          <script>
+            // Redirect to Shopify order status page
+            // Note: Replace this URL with your actual order status page URL
+            // You can find it in Shopify Admin > Settings > Checkout > Order status page
+            setTimeout(function () {
+              // Option 1: Use Shopify's order status page (if enabled)
+              // window.location.href = '{{ shop.url }}/pages/order-status?order_number={{ order_number }}&email={{ email }}';
+
+              // Option 2: Redirect to account orders page (requires login)
+              // window.location.href = '{{ routes.account_url }}/orders/{{ order_number }}';
+
+              // Option 3: Use a Shopify App for order tracking
+              // window.location.href = '/apps/order-tracking?order_number={{ order_number }}&email={{ email }}';
+
+              // For now, show a message that order lookup requires additional setup
+              document.querySelector('.track-order__note').innerHTML =
+                '{{ "pages.track_order.setup_required" | t | default: "Order tracking requires integration with Shopify Order Status API or a third-party service. Please contact support for assistance." }}';
+            }, 2000);
+          </script>
+        </div>
+      </div>
+    {%- else -%}
+      <div id="track-order-results" class="track-order__results" style="display: none;">
+        {%- comment -%} Results will be populated via JavaScript {%- endcomment -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  .track-order {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 1040px;
+    margin: 24px auto;
+    padding: var(--padding-xl);
+    border: 1px solid var(--border-color);
+    border-radius: var(--style-border-radius-xs);
+  }
+
+  .track-order__card {
+    width: 400px;
+    text-align: center;
+  }
+
+  .track-order__heading {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #000000;
+    margin: 0 0 2rem 0;
+  }
+
+  .track-order__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .track-order__form-row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .track-order__label {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: #000000;
+  }
+
+  .track-order__input {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    {% comment %} background: #f5f5f0; {% endcomment %}
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    color: #000000;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+  }
+
+  .track-order__input::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+  .track-order__input:focus {
+    outline: none;
+    border-color: rgba(0, 0, 0, 0.3);
+    background: #fafaf5;
+  }
+  .submit__wrapper {
+  }
+  .track-order__submit {
+    display: initial;
+    height: 42px;
+    padding: 0 20px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .track-order__results {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .track-order__card {
+      padding: 2rem 1.5rem;
+    }
+
+    .track-order__heading {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const form = document.getElementById('{{ form_id }}');
+    const resultsDiv = document.getElementById('track-order-results');
+
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const orderNumber = form.querySelector('[name="order_number"]').value.trim();
+      const email = form.querySelector('[name="email"]').value.trim();
+
+      if (!orderNumber || !email) {
+        resultsDiv.style.display = 'block';
+        resultsDiv.innerHTML = `
+          <div class="track-order__error">
+            <p>{{ 'pages.track_order.error_required' | t | default: 'Please fill in all required fields.' }}</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Solution: Redirect to current page with query parameters
+      // This avoids CORS issues by using standard form submission
+      // The page will reload and can process the order lookup server-side
+      const currentUrl = new URL(window.location.href);
+      currentUrl.searchParams.set('order_number', orderNumber);
+      currentUrl.searchParams.set('email', email);
+      window.location.href = currentUrl.toString();
+    });
+  })();
+</script>

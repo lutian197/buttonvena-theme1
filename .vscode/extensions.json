@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "shopify.theme-check",
+    "panoply.liquid",
+    "sissel.shopify-liquid",
+    "esbenp.prettier-vscode",
+    "shopify.cli"
+  ]
+}
