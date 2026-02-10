@@ -1,0 +1,293 @@
+{%- doc -%}
+  Enhanced Resource Image Component with Product Info Overlay
+
+  Renders responsive images for products with product title, price, and quick-add button overlay.
+  Designed for product cards where information should be displayed on the image.
+
+  @param {string} content_type - Type of content: 'products'
+  @param {object} [product] - Product object
+  @param {string} parent_block_id - Parent block ID for CSS targeting
+  @param {object} block_settings - Block settings object
+  @param {object} [section_settings] - Section settings for layout-aware sizing
+  @param {object} [section] - Section object (for section.id)
+  @param {object} [block] - Block object (for quick-add)
+  @param {string} [block_attributes] - Block shopify attributes for theme editor
+
+  @example
+  {% render 'resource-image2',
+      content_type: 'products',
+      product: product,
+      parent_block_id: block.id,
+      block_settings: block.settings,
+      section_settings: section.settings,
+      block_attributes: block.shopify_attributes
+    %}
+{%- enddoc -%}
+
+{% liquid
+  # Parameter validation and defaults
+  assign content_type = content_type | default: 'products'
+  assign parent_block_id = parent_block_id | default: ''
+  assign block_settings = block_settings | default: empty
+  assign section_settings = section_settings | default: empty
+  assign block_attributes = block_attributes | default: ''
+  assign section_id = section.id | default: ''
+
+  # Early return if required parameters missing
+  unless parent_block_id != blank and block_settings != empty
+    echo '<!-- Error: parent_block_id and block_settings parameters required for resource-image2 snippet -->'
+    break
+  endunless
+
+  # Get product - try from parameter first, then from closest
+  assign product_resource = product
+  if product_resource == blank and content_type == 'products'
+    assign product_resource = closest.product
+  endif
+
+  # Determine image source
+  if content_type == 'products' and product_resource != blank
+    assign image_resource = product_resource.featured_image
+    if image_resource == blank
+      assign image_resource = product_resource.images.first
+    endif
+  else
+    assign image_resource = blank
+  endif
+
+  # Calculate aspect ratio
+  assign ratio = 1
+  case block_settings.image_ratio
+    when 'landscape'
+      assign ratio = '16 / 9'
+    when 'portrait'
+      assign ratio = '4 / 5'
+    when 'square'
+      assign ratio = '1 / 1'
+    when 'adapt'
+      if image_resource != blank
+        assign ratio = image_resource.aspect_ratio
+      endif
+  endcase
+
+  if ratio == 0 or ratio == null
+    assign ratio = 1
+  endif
+
+  # Generate responsive image attributes
+  assign sizes = '(min-width: 750px) 50vw, 100vw'
+  assign lazy_sizes = 'auto, ' | append: sizes
+  assign loading = 'eager'
+
+  # Layout-aware sizing for resource lists
+  if section_settings.layout_type
+    case section_settings.layout_type
+      when 'grid', 'carousel'
+        assign calculated_width = 100 | divided_by: section_settings.columns | append: 'vw'
+        assign sizes = '(min-width: 750px) [calc-width], 100vw' | replace: '[calc-width]', calculated_width
+      when 'editorial', 'bento'
+        assign loading = 'lazy'
+        assign sizes = lazy_sizes
+    endcase
+  endif
+
+  assign widths = '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
+
+  # Calculate placeholder variant from parent block ID
+  assign block_parts = parent_block_id | split: '-'
+  assign content_index = block_parts.last | default: 0
+  assign variant = content_index | modulo: 3 | plus: 1
+  assign placeholder_name = 'detailed-apparel-' | append: variant
+%}
+
+{% comment %} Apply aspect ratio to parent component {% endcomment %}
+{% style %}
+  {% if content_type == 'products' %}
+    .product-card[data-block-id="{{ parent_block_id }}"] {
+      --ratio: {{ ratio }};
+    }
+  {% endif %}
+{% endstyle %}
+
+{% if image_resource != blank %}
+  <div
+    class="
+      image-block
+      resource-image2
+      {% if content_type == 'products' %}
+        product-card__image
+      {% endif %}
+      spacing-style border-style
+      {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}
+    "
+    style="
+      {%- render 'spacing-style', settings: block_settings -%}
+      {%- render 'border-override', settings: block_settings -%}
+    "
+    {{ block_attributes }}
+  >
+    {%- if block_settings.toggle_overlay -%}
+      {% render 'overlay', settings: block_settings %}
+    {%- endif -%}
+
+    {{
+      image_resource
+      | image_url: width: 3840
+      | image_tag: widths: widths, class: 'image-block__image', sizes: sizes, loading: loading
+    }}
+
+    {% comment %} Product info overlay at bottom {% endcomment %}
+    {% if product_resource != blank %}
+      <div class="resource-image2__overlay">
+        <div class="resource-image2__info">
+          <div class="resource-image2__text">
+            <h3 class="resource-image2__title">{{ product_resource.title }}</h3>
+            <div class="resource-image2__price">
+              {% render 'price', product_resource: product_resource, show_unit_price: false %}
+            </div>
+          </div>
+          {% if settings.quick_add and product_resource.available %}
+            <div class="resource-image2__quick-add">
+              {% render 'quick-add', product: product_resource, section_id: section_id, block: block %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% else %}
+  <div
+    class="
+      image-block
+      resource-image2 resource-image2--placeholder
+      {% if content_type == 'products' %}
+        product-card__image product-card__image--placeholder
+      {% endif %}
+      spacing-style border-style
+      {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}
+    "
+    style="
+      {%- render 'spacing-style', settings: block_settings -%}
+      {%- render 'border-override', settings: block_settings -%}
+    "
+    {{ block_attributes }}
+  >
+    {%- if block_settings.toggle_overlay -%}
+      {% render 'overlay', settings: block_settings %}
+    {%- endif -%}
+
+    <div class="image-block__image">
+      {{ placeholder_name | placeholder_svg_tag }}
+    </div>
+
+    {% comment %} Product info overlay at bottom {% endcomment %}
+    {% if product_resource != blank %}
+      <div class="resource-image2__overlay">
+        <div class="resource-image2__info">
+          <div class="resource-image2__text">
+            <h3 class="resource-image2__title">{{ product_resource.title }}</h3>
+            <div class="resource-image2__price">
+              {% render 'price', product_resource: product_resource, show_unit_price: false %}
+            </div>
+          </div>
+          {% comment %} {% if settings.quick_add and product_resource.available %} {% endcomment %}
+          <div class="resource-image2__quick-add">
+            {% render 'quick-add', product: product_resource, section_id: section_id, block: block %}
+          </div>
+          {% comment %} {% endif %} {% endcomment %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .resource-image2 {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    z-index: var(--layer-base);
+    overflow: hidden;
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: var(--ratio);
+  }
+
+  .resource-image2 .image-block__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .resource-image2--placeholder {
+    width: 100%;
+    height: 100%;
+  }
+
+  .resource-image2__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--padding-md);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+    z-index: var(--layer-raised);
+    pointer-events: none;
+  }
+
+  .resource-image2__info {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--padding-md);
+    pointer-events: auto;
+  }
+
+  .resource-image2__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-xs);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .resource-image2__title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-background, #ffffff);
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .resource-image2__price {
+    color: var(--color-background, #ffffff);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .resource-image2__price .price,
+  .resource-image2__price .compare-at-price {
+    color: var(--color-background, #ffffff);
+  }
+
+  @media screen and (max-width: 749px) {
+    .resource-image2__overlay {
+      padding: var(--padding-sm);
+    }
+
+    .resource-image2__title {
+      font-size: 0.875rem;
+    }
+
+    .resource-image2__price {
+      font-size: 0.75rem;
+    }
+  }
+{% endstylesheet %}
