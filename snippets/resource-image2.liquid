@@ -277,6 +277,14 @@
     color: var(--color-background, #ffffff);
   }
 
+  /* Hide "add" button for multi-variant products that don't show a swatches variant picker */
+  :is(.resource-image2):has(.quick-add__product-form-component--multi-variant):not(
+      :has(swatches-variant-picker-component)
+    )
+    .quick-add__button--add {
+    display: none;
+  }
+
   @media screen and (max-width: 749px) {
     .resource-image2__overlay {
       padding: var(--padding-sm);

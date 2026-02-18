@@ -104,7 +104,8 @@
           icon_only_on_mobile: true,
           product: product
         %}
-      {%- elsif product.variants.size > 1 -%}
+      {%- endif -%}
+      {%- if product.variants.size > 1 -%}
         <button
           class="button quick-add__button quick-add__button--choose"
           {% comment %} type="submit" is the default, so we explicitly set it to "button" to prevent the ProductFormComponent.handleSubmit from being triggered {% endcomment %}
