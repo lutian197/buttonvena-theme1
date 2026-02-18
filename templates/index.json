@@ -16,7 +16,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<h4><strong>THE ART OF DETAILS</strong></h4>",
+            "text": "<p><strong>REIMAGINING YOUR WARDROBE</strong></p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -42,7 +42,7 @@
           "type": "button",
           "name": "t:names.button",
           "settings": {
-            "label": "Shop Button Covers",
+            "label": "SHOP BUTTON COVERS",
             "link": "shopify://collections/all",
             "open_in_new_tab": false,
             "style_class": "button",
@@ -62,6 +62,7 @@
       "settings": {
         "media_type_1": "video",
         "media_type_2": "image",
+        "image_2": "shopify://shop_images/2026-02-01_143627.jpg",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
         "media_type_1_mobile": "image",
@@ -75,7 +76,7 @@
         "align_baseline": true,
         "horizontal_alignment_flex_direction_column": "center",
         "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
+        "gap": 35,
         "section_width": "page-width",
         "section_height": "medium",
         "section_height_custom": 50,
@@ -265,7 +266,7 @@
       },
       "name": "Featured collection",
       "settings": {
-        "collection": "all",
+        "collection": "best-sellers",
         "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 8,
@@ -418,11 +419,12 @@
       "name": "t:names.collections_carousel",
       "settings": {
         "collection_list": [
-          "best-sellers",
-          "frontpage",
           "button",
           "button1",
-          "button3"
+          "button3",
+          "button4",
+          "button5",
+          "button6"
         ],
         "layout_type": "carousel",
         "carousel_on_mobile": false,
@@ -450,7 +452,7 @@
           "static": true,
           "settings": {
             "media_type": "image",
-            "image": "shopify://shop_images/2.png",
+            "image": "shopify://shop_images/2026-02-08_150540.jpg",
             "link": "",
             "video_loop": true,
             "video_autoplay": false,
@@ -465,7 +467,7 @@
           "settings": {
             "horizontal_alignment_flex_direction_column": "center",
             "vertical_alignment_flex_direction_column": "space-between",
-            "gap": 39
+            "gap": 57
           },
           "blocks": {
             "group_eq4jYi": {
@@ -478,7 +480,7 @@
                 "align_baseline": false,
                 "horizontal_alignment_flex_direction_column": "flex-start",
                 "vertical_alignment_flex_direction_column": "center",
-                "gap": 35,
+                "gap": 0,
                 "width": "fill",
                 "custom_width": 100,
                 "width_mobile": "fill",
@@ -511,7 +513,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<h3><strong>OUR STORY: THE ART OF DETAILS</strong></h3>",
+                    "text": "<h3><strong>THE ORIGIN</strong></h3>",
                     "width": "fit-content",
                     "max_width": "none",
                     "alignment": "left",
@@ -527,7 +529,7 @@
                     "background_color": "#00000026",
                     "corner_radius": 0,
                     "padding-block-start": 0,
-                    "padding-block-end": 0,
+                    "padding-block-end": 25,
                     "padding-inline-start": 0,
                     "padding-inline-end": 0
                   },
@@ -536,18 +538,18 @@
                 "text_Nk8zAj": {
                   "type": "text",
                   "settings": {
-                    "text": "<h3><strong>Our story begins with a passion for the past.</strong></h3><h3>As admirers of vintage craftsmanship, we have always been drawn to the accessories of earlier eras. Pieces shaped with intention, quiet elegance, and a sense of permanence.</h3><h3>In that exploration, we rediscovered the <strong>button cover</strong>.<br/>Once a symbol of refinement, now nearly forgotten. Tucked away by shifting trends and time.</h3><h3><strong>But we saw something others overlooked.</strong></h3><h3>The few remaining vintage designs felt frozen.<br/>Too retro. Too ornate. Or simply misaligned with the clean, modern wardrobe of today.</h3><h3>Yet, the desire for self-expression remains timeless.<br/>We all search for that one subtle detail that says, <em>“This is me.”</em></h3><h3><strong>That is why Button Vena exists.</strong></h3><h3>Not to revive the button cover as it once was, but to reinterpret it for the present.</h3><h3>We reimagine this historical accessory with contemporary aesthetics—refined lines, thoughtful proportions, and a modern sensibility. We preserve its essence while removing the weight of the past.</h3><h3>We bridge heritage and today’s style.<br/>Transforming a forgotten classic into a quiet form of everyday luxury.</h3>",
+                    "text": "<p>Inspired by the permanence of vintage craftsmanship, we found a forgotten language: the button cover. Once a symbol of refinement, now a lost art.<br/><br/>We saw the past frozen in ornate, retro designs—beautiful, but misaligned with the modern silhouette. So we reimagined it.<br/><br/>Button Vena strips away the weight of history, leaving only refined lines and contemporary proportions. We don’t just revive a classic; we reinterpret it for the present.<br/><br/>Transforming the everyday into a quiet form of luxury.</p><p><br/>A subtle detail that doesn't just decorate—it defines.</p>",
                     "width": "fit-content",
                     "max_width": "none",
                     "alignment": "left",
-                    "type_preset": "h4",
+                    "type_preset": "custom",
                     "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
+                    "font_size": "1.125rem",
+                    "line_height": "loose",
+                    "letter_spacing": "loose",
                     "case": "none",
                     "wrap": "pretty",
-                    "color": "var(--color-foreground)",
+                    "color": "var(--color-foreground-heading)",
                     "background": false,
                     "background_color": "#00000026",
                     "corner_radius": 0,
