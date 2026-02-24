@@ -47,7 +47,7 @@
 
   # Determine image source
   if content_type == 'products' and product_resource != blank
-    assign image_resource = product_resource.featured_image
+    assign image_resource = product_resource.images[2]
     if image_resource == blank
       assign image_resource = product_resource.images.first
     endif
@@ -148,7 +148,45 @@
           </div>
           {% if settings.quick_add and product_resource.available %}
             <div class="resource-image2__quick-add">
-              {% render 'quick-add', product: product_resource, section_id: section_id, block: block %}
+              {% liquid
+                # Find first color variant ID (no color picker in resource-image2, so use first color)
+                assign default_variant_id = null
+                assign color_option = null
+
+                # Find color option
+                for option in product_resource.options_with_values
+                  assign option_name_lower = option.name | downcase
+                  if option_name_lower contains 'color' or option_name_lower contains 'colour'
+                    assign color_option = option
+                    break
+                  endif
+                endfor
+
+                # If no color option found, use first option if it has swatches
+                if color_option == null
+                  for option in product_resource.options_with_values
+                    assign swatch_count = option.values | map: 'swatch' | compact | size
+                    if swatch_count > 0
+                      assign color_option = option
+                      break
+                    endif
+                  endfor
+                endif
+
+                # Get first color variant ID
+                if color_option != null and color_option.values.size > 0
+                  assign default_variant_id = color_option.values.first.variant.id
+                elsif product_resource.selected_or_first_available_variant != blank
+                  assign default_variant_id = product_resource.selected_or_first_available_variant.id
+                endif
+              %}
+              {% render 'quick-add-color',
+                product: product_resource,
+                section_id: section_id,
+                block: block,
+                default_variant_id: default_variant_id,
+                listen_to_color_changes: false
+              %}
             </div>
           {% endif %}
         </div>
@@ -190,11 +228,49 @@
               {% render 'price', product_resource: product_resource, show_unit_price: false %}
             </div>
           </div>
-          {% comment %} {% if settings.quick_add and product_resource.available %} {% endcomment %}
-          <div class="resource-image2__quick-add">
-            {% render 'quick-add', product: product_resource, section_id: section_id, block: block %}
-          </div>
-          {% comment %} {% endif %} {% endcomment %}
+          {% if settings.quick_add and product_resource.available %}
+            <div class="resource-image2__quick-add">
+              {% liquid
+                # Find first color variant ID (no color picker in resource-image2, so use first color)
+                assign default_variant_id = null
+                assign color_option = null
+
+                # Find color option
+                for option in product_resource.options_with_values
+                  assign option_name_lower = option.name | downcase
+                  if option_name_lower contains 'color' or option_name_lower contains 'colour'
+                    assign color_option = option
+                    break
+                  endif
+                endfor
+
+                # If no color option found, use first option if it has swatches
+                if color_option == null
+                  for option in product_resource.options_with_values
+                    assign swatch_count = option.values | map: 'swatch' | compact | size
+                    if swatch_count > 0
+                      assign color_option = option
+                      break
+                    endif
+                  endfor
+                endif
+
+                # Get first color variant ID
+                if color_option != null and color_option.values.size > 0
+                  assign default_variant_id = color_option.values.first.variant.id
+                elsif product_resource.selected_or_first_available_variant != blank
+                  assign default_variant_id = product_resource.selected_or_first_available_variant.id
+                endif
+              %}
+              {% render 'quick-add-color',
+                product: product_resource,
+                section_id: section_id,
+                block: block,
+                default_variant_id: default_variant_id,
+                listen_to_color_changes: false
+              %}
+            </div>
+          {% endif %}
         </div>
       </div>
     {% endif %}

@@ -1,0 +1,343 @@
+{%- doc -%}
+  Renders a product gallery with color options and quick-add button.
+
+  @param {object} product - The product object
+  @param {string} section_id - The section ID
+  @param {object} block - The block object
+  @param {string} image_sizes - Image sizes attribute
+  @param {string} ratio - Aspect ratio
+{%- enddoc -%}
+
+{% liquid
+  assign product = product | default: closest.product
+  assign main_image = product.featured_image
+  assign color_option = null
+  assign color_variants = blank
+
+  # Find color option (usually the first option)
+  for option in product.options_with_values
+    assign option_name_lower = option.name | downcase
+    if option_name_lower contains 'color' or option_name_lower contains 'colour'
+      assign color_option = option
+      break
+    endif
+  endfor
+
+  # If no color option found, use first option if it has swatches
+  if color_option == null
+    for option in product.options_with_values
+      assign swatch_count = option.values | map: 'swatch' | compact | size
+      if swatch_count > 0
+        assign color_option = option
+        break
+      endif
+    endfor
+  endif
+
+  # Get color variants and their images
+  if color_option != null
+    assign color_variants = color_option.values
+    # Set main image to first color variant's image
+    assign first_color_variant = color_option.values.first
+    if first_color_variant.variant.featured_media != blank
+      assign main_image = first_color_variant.variant.featured_media.preview_image
+    elsif first_color_variant.variant.featured_image != blank
+      assign main_image = first_color_variant.variant.featured_image
+    endif
+  endif
+
+  # If no color option or no image found, use product's first image
+  if main_image == blank
+    assign main_image = product.images.first
+  endif
+
+  assign widths = '240, 352, 832, 1200, 1600, 1920'
+%}
+
+<div class="product-gallery-with-colors" data-product-id="{{ product.id }}">
+  <div class="product-gallery-with-colors__main">
+    <a
+      href="{% render 'product-card-variant-url', product: product %}"
+      aria-label="{{ product.title }}"
+      class="product-gallery-with-colors__main-link"
+    >
+      {% if main_image != blank %}
+        {% assign main_image_id = 'product-gallery-main-image-' | append: product.id %}
+        {{
+          main_image
+          | image_url: width: 1920
+          | image_tag:
+            widths: widths,
+            class: 'product-gallery-with-colors__main-image',
+            sizes: image_sizes,
+            loading: 'lazy',
+            id: main_image_id
+        }}
+      {% else %}
+        <div class="product-gallery-with-colors__placeholder">
+          {{ 'product-apparel-1' | placeholder_svg_tag }}
+        </div>
+      {% endif %}
+    </a>
+
+    {% if color_variants != blank and color_variants.size > 0 or settings.quick_add or settings.mobile_quick_add %}
+      <div class="product-gallery-with-colors__footer">
+        {% if color_variants != blank and color_variants.size > 0 %}
+          <div class="product-gallery-with-colors__colors">
+            {% for color_value in color_variants %}
+              {% liquid
+                assign variant_image = color_value.variant.featured_media.preview_image
+                if variant_image == blank
+                  assign variant_image = color_value.variant.featured_image
+                endif
+                if variant_image == blank
+                  assign variant_image = main_image
+                endif
+
+                assign is_active = false
+                if forloop.first
+                  assign is_active = true
+                endif
+              %}
+              <button
+                type="button"
+                class="product-gallery-with-colors__color-thumb {% if is_active %}product-gallery-with-colors__color-thumb--active{% endif %}"
+                data-variant-id="{{ color_value.variant.id }}"
+                data-image-url="{{ variant_image | image_url: width: 1920 }}"
+                data-image-srcset="{{ variant_image | image_url: width: 240 }} 240w, {{ variant_image | image_url: width: 352 }} 352w, {{ variant_image | image_url: width: 832 }} 832w, {{ variant_image | image_url: width: 1200 }} 1200w, {{ variant_image | image_url: width: 1600 }} 1600w, {{ variant_image | image_url: width: 1920 }} 1920w"
+                aria-label="{{ color_value.name }}"
+              >
+                {{
+                  variant_image
+                  | image_url: width: 120
+                  | image_tag:
+                    class: 'product-gallery-with-colors__color-thumb-image',
+                    loading: 'lazy',
+                    alt: color_value.name
+                }}
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="product-gallery-with-colors__quick-add">
+          {% if settings.quick_add or settings.mobile_quick_add %}
+            {% liquid
+              # Get the first (active) color variant ID
+              assign default_variant_id = null
+              if color_variants != blank and color_variants.size > 0
+                assign default_variant_id = color_variants.first.variant.id
+              endif
+            %}
+            {% render 'quick-add-color',
+              product: product,
+              section_id: section_id,
+              block: block,
+              default_variant_id: default_variant_id,
+              listen_to_color_changes: true
+            %}
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  (function () {
+    function initProductGalleryWithColors() {
+      const galleries = document.querySelectorAll('.product-gallery-with-colors');
+
+      galleries.forEach((gallery) => {
+        const productId = gallery.dataset.productId;
+        const mainImage = gallery.querySelector('#product-gallery-main-image-' + productId);
+        const colorThumbs = gallery.querySelectorAll('.product-gallery-with-colors__color-thumb');
+
+        if (!mainImage || colorThumbs.length === 0) return;
+
+        // Use event delegation to avoid duplicate listeners
+        if (gallery.dataset.initialized === 'true') return;
+        gallery.dataset.initialized = 'true';
+
+        // Bind click events directly to each thumb button
+        colorThumbs.forEach((thumb) => {
+          thumb.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const imageUrl = this.dataset.imageUrl;
+            const imageSrcset = this.dataset.imageSrcset;
+
+            if (!imageUrl || !mainImage) return;
+
+            // Update main image with fade effect
+            mainImage.style.opacity = '0';
+
+            setTimeout(() => {
+              mainImage.src = imageUrl;
+              if (imageSrcset) {
+                mainImage.srcset = imageSrcset;
+              }
+              mainImage.style.opacity = '1';
+            }, 150);
+
+            // Update active state
+            colorThumbs.forEach((t) => t.classList.remove('product-gallery-with-colors__color-thumb--active'));
+            this.classList.add('product-gallery-with-colors__color-thumb--active');
+
+            // Dispatch custom event for variant change
+            const variantId = this.dataset.variantId;
+            if (variantId) {
+              gallery.dispatchEvent(
+                new CustomEvent('color-variant-changed', {
+                  detail: { variantId: variantId },
+                  bubbles: true,
+                })
+              );
+            }
+          });
+        });
+      });
+    }
+
+    // Initialize on DOM ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initProductGalleryWithColors);
+    } else {
+      initProductGalleryWithColors();
+    }
+
+    // Also initialize for dynamically loaded content
+    if (typeof window.Shopify !== 'undefined' && window.Shopify.designMode) {
+      document.addEventListener('shopify:section:load', initProductGalleryWithColors);
+    }
+  })();
+</script>
+
+{% stylesheet %}
+  .product-gallery-with-colors {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .product-gallery-with-colors__main {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    overflow: hidden;
+    aspect-ratio: var(--gallery-aspect-ratio, 4 / 5);
+  }
+
+  .product-gallery-with-colors__main-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+  }
+
+  .product-gallery-with-colors__main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.3s ease;
+  }
+
+  .product-gallery-with-colors__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(var(--color-foreground-rgb), 0.05);
+  }
+
+  .product-gallery-with-colors__placeholder svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .product-gallery-with-colors__footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--padding-sm);
+    padding: var(--padding-sm);
+    z-index: var(--layer-raised, 10);
+    pointer-events: none;
+  }
+
+  .product-gallery-with-colors__footer > * {
+    pointer-events: auto;
+  }
+
+  .product-gallery-with-colors__colors {
+    display: flex;
+    gap: var(--padding-xs);
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .product-gallery-with-colors__colors::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product-gallery-with-colors__footer:has(.product-gallery-with-colors__colors:empty) {
+    justify-content: flex-end;
+  }
+
+  .product-gallery-with-colors__color-thumb {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    padding: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    /* border-radius: var(--border-radius-sm, 4px); */
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+    position: relative;
+  }
+
+  .product-gallery-with-colors__color-thumb:hover:not(.product-gallery-with-colors__color-thumb--active) {
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .product-gallery-with-colors__color-thumb--active {
+    border: 2px solid rgba(0, 0, 0, 1);
+  }
+
+  .product-gallery-with-colors__color-thumb-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* border-radius: calc(var(--border-radius-sm, 4px) - 2px); */
+    display: block;
+  }
+
+  .product-gallery-with-colors__quick-add {
+    flex-shrink: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-gallery-with-colors__footer {
+      padding: var(--padding-xs);
+      gap: var(--padding-xs);
+    }
+
+    .product-gallery-with-colors__color-thumb {
+      width: 40px;
+      height: 40px;
+    }
+  }
+{% endstylesheet %}
