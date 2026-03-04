@@ -45,7 +45,7 @@
         ref="menuitem"
       >
         <span>{% render 'menu-icon' %}</span>
-        <span class="menu-list__link-title">{{- link.title -}}</span>
+        {% comment %} <span class="menu-list__link-title">{{- link.title -}}</span> {% endcomment %}
       </a>
       {%- if link.links != blank -%}
         <div class="menu-list__submenu{{ color_scheme_classes }}" ref="submenu[]">
@@ -94,11 +94,11 @@
 </nav>
 
 {% stylesheet %}
-.menu-list__link {
- position: relative;
-}
-.menu-list__link-title::before{
-  /* content: "";
+  .menu-list__link {
+    position: relative;
+  }
+  .menu-list__link-title::before {
+    /* content: "";
   position: absolute;
   background-image: url('../assets/icon-menu.svg');
   width: var(--icon-size-xs);
@@ -108,5 +108,5 @@
   padding: 2px;
   background-size: contain;
   background-repeat: no-repeat; */
-}
+  }
 {% endstylesheet %}
