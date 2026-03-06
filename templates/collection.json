@@ -12,6 +12,32 @@
     "section": {
       "type": "section",
       "blocks": {
+        "text_dPUD9H": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h3><strong>ALL BUTTON COVERS</strong></h3>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "text_twGGkJ": {
           "type": "text",
           "name": "Description",
@@ -40,6 +66,7 @@
         }
       },
       "block_order": [
+        "text_dPUD9H",
         "text_twGGkJ"
       ],
       "name": "Collection heading",
@@ -58,7 +85,7 @@
         "color_scheme": "scheme-1",
         "background_media": "image",
         "video_position": "cover",
-        "background_image": "shopify://shop_images/2026-02-01_141934.jpg",
+        "background_image": "shopify://shop_images/2026-02-01_143627.jpg",
         "background_image_position": "cover",
         "border": "none",
         "border_width": 1,

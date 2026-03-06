@@ -1,5 +1,3 @@
-
-
 {%- assign block_settings = block.settings -%}
 
 <div
@@ -36,6 +34,32 @@
     .product-information.section--page-width .product-details > .group-block {
       padding-inline: 0;
     }
+
+    /* Group内 text 块在移动端字体大小 */
+    .product-details .group-block .text-block h1 {
+      margin-top: 1rem;
+      font-size: 24px;
+    }
+    .product-details .group-block .text-block .price {
+      font-size: 20px;
+    }
+
+    .product-details product-price {
+      padding-block-start: 0;
+    }
+
+    .jdgm-horizon-widget {
+      display: none;
+    }
+
+    .product-details .divider {
+      display: none;
+    }
+
+    .product-details .quantity-selector,
+    .product-details .accelerated-checkout-block {
+      display: none;
+    }
   }
 
   .view-product-title {
@@ -48,6 +72,12 @@
     align-self: start;
     justify-content: center;
     width: 45%;
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-details {
+      width: 100%;
+    }
   }
 
   @media screen and (min-width: 750px) {
