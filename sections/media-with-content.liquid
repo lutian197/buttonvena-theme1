@@ -105,7 +105,6 @@
     &.media-with-content--medium {
       @media screen and (min-width: 750px) {
         --media-with-content-grid-columns: 1fr 1fr;
-        margin: 0 var(--page-margin);
       }
     }
 
@@ -149,7 +148,7 @@
     width: var(--full-page-grid-central-column-width);
     grid-template-columns: var(--media-with-content-grid-columns);
     grid-template-areas: 'media media media' 'content content content';
-
+    margin: 0 var(--page-margin);
     @media screen and (min-width: 750px) {
       --media-with-content-grid-columns: 3.5fr 2.5fr;
 
