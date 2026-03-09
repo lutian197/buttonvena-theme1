@@ -1,4 +1,3 @@
-
 {%- doc -%}
   Renders the facet filtering component
 
@@ -105,6 +104,12 @@
       {% endif %}
     </div>
   {% endif %}
+
+  <div class="products-count-wrapper--mobile">
+    <span title="{{ 'content.product_count' | t }}">
+      {{- 'content.item_count' | t: count: products_count -}}
+    </span>
+  </div>
 
   <div
     class="
@@ -461,7 +466,9 @@
   }
 
   .facets-block-wrapper {
+    display: none;
     @media screen and (min-width: 750px) {
+      display: block;
       margin: var(--facets-margin);
       grid-column: var(--grid-column--desktop);
     }
@@ -1054,6 +1061,18 @@
   .collection-wrapper:has(> .facets--horizontal) .facets__panel[open] {
     @media screen and (min-width: 750px) {
       z-index: var(--facets-open-z-index);
+    }
+  }
+
+  .products-count-wrapper--mobile {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .products-count-wrapper--mobile {
+      display: block;
+      text-align: right;
+      margin: 0 var(--page-margin) 8px;
     }
   }
 {% endstylesheet %}
