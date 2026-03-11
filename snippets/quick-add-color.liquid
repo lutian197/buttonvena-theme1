@@ -297,7 +297,9 @@
       }
     }
 
-    customElements.define('quick-add-color-component', QuickAddColorComponent);
+    if (!customElements.get('quick-add-color-component')) {
+      customElements.define('quick-add-color-component', QuickAddColorComponent);
+    }
   })();
 </script>
 

@@ -405,11 +405,12 @@
       "name": "t:names.collections_carousel",
       "settings": {
         "collection_list": [
-          "button1",
-          "button3",
-          "button4",
-          "button5",
-          "button6"
+          "the-basic-collection",
+          "floral",
+          "gold-button-covers",
+          "pearls-button-covers",
+          "rhinestone-button-covers",
+          "silver-button-covers"
         ],
         "layout_type": "carousel",
         "carousel_on_mobile": false,
