@@ -114,8 +114,8 @@
               <label
                 data-media-id="{{ featured_media.id }}"
                 class="variant-option__button-label variant-option__button-label--has-swatch swatch-rounded"
-                on:pointerenter="product-card/previewVariant/{{ featured_media.id }}"
-                on:pointerleave="product-card/resetVariant"
+                {% comment %} on:pointerenter="product-card/previewVariant/{{ featured_media.id }}"
+                on:pointerleave="product-card/resetVariant" {% endcomment %}
               >
                 <input
                   type="radio"

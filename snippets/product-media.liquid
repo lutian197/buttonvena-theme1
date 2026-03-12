@@ -131,6 +131,21 @@
         -%}
     {% endcase %}
   {% endunless %}
+
+  <!-- 渲染 variant-swatches和add-to-cart-button -->
+  <div class="product-media__buttons">
+    {% comment %}
+      {% render 'variant-swatches', product_resource: closest.product %}
+
+      {% render 'add-to-cart-button',
+        add_to_cart_text: add_to_cart_text,
+        class: 'button quick-add__button quick-add__button--add',
+        can_add_to_cart: can_add_to_cart,
+        icon_only_on_mobile: true,
+        product: product
+      %}
+    {% endcomment %}
+  </div>
 </div>
 
 {% stylesheet %}
@@ -138,6 +153,11 @@
     aspect-ratio: var(--gallery-aspect-ratio, var(--ratio));
     min-height: 0;
     min-width: 0;
+  }
+
+  .product-media__buttons {
+    display: flex;
+    align-items: center;
   }
 
   .product-media__image {

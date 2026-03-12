@@ -99,10 +99,12 @@
     --gallery-aspect-ratio: {{ ratio }};
   "
   data-product-id="{{ product.id }}"
-  {% if settings.show_second_image_on_hover %}
-    on:pointerenter="/previewImage"
-    on:pointerleave="/resetImage"
-  {% endif %}
+  {% comment %}
+    {% if settings.show_second_image_on_hover %}
+      on:pointerenter="/previewImage"
+      on:pointerleave="/resetImage"
+    {% endif %}
+  {% endcomment %}
   {% if settings.transition_to_main_product %}
     data-view-transition-to-main-product
   {% endif %}
@@ -127,7 +129,7 @@
       endif
 
       if all_media.size > 2 and generic_media_size > 0
-        assign show_arrows = true
+        assign show_arrows = false
       endif
 
       # Don't overfetch media if we don't need to
@@ -198,13 +200,30 @@
         assign slideshow_attributes = slideshow_attributes | append: ' disabled="true"'
       endif
     %}
-    {% render 'product-gallery-with-colors',
-      product: product,
-      section_id: section.id,
-      block: block,
-      image_sizes: image_sizes,
-      ratio: ratio
-    %}
+    {% comment %}
+      {% render 'product-gallery-with-colors',
+        product: product,
+        section_id: section.id,
+        block: block,
+        image_sizes: image_sizes,
+        ratio: ratio
+      %}
+    {% endcomment %}
+    <a
+      class="contents"
+      ref="cardGalleryLink"
+      href="{% render 'product-card-variant-url', product: product %}"
+      aria-label="{{- product.title -}}"
+    >
+      {% render 'slideshow',
+        ref: 'slideshow',
+        initial_slide: 0,
+        slides: slides,
+        slide_count: all_media.size,
+        show_arrows: show_arrows,
+        attributes: slideshow_attributes
+      %}
+    </a>
   {% elsif product != blank and product.media.size == 0 %}
     <product-title class="product-card-gallery__title-placeholder">
       <a
@@ -232,7 +251,7 @@
       render 'slideshow', ref: 'slideshow', slides: placeholder_slide, slide_count: 1, attributes: 'disabled="true"'
     %}
   {%- endif -%}
-  {{ children }}
+  {% comment %} {{ children }} {% endcomment %}
 </div>
 
 {% stylesheet %}

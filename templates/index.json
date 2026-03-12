@@ -42,7 +42,7 @@
           "type": "button",
           "name": "t:names.button",
           "settings": {
-            "label": "SHOP BUTTON COVERS",
+            "label": "SHOP ALL BUTTON COVERS",
             "link": "shopify://collections/all",
             "open_in_new_tab": false,
             "style_class": "button",
@@ -95,6 +95,19 @@
     "product_list_fa6P9H": {
       "type": "product-list",
       "blocks": {
+        "product_inventory_JGfGFy": {
+          "type": "product-inventory",
+          "name": "t:names.product_inventory",
+          "settings": {
+            "inventory_threshold": 10,
+            "show_inventory_quantity": true,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "static-header": {
           "type": "_product-list-content",
           "name": "t:names.header",
@@ -194,6 +207,20 @@
               },
               "blocks": {}
             },
+            "swatches_kXjm3j": {
+              "type": "swatches",
+              "name": "t:names.swatches",
+              "settings": {
+                "product_swatches_alignment": "flex-start",
+                "product_swatches_alignment_mobile": "flex-start",
+                "hide_padding": false,
+                "product_swatches_padding_top": 4,
+                "product_swatches_padding_bottom": 0,
+                "product_swatches_padding_left": 0,
+                "product_swatches_padding_right": 0
+              },
+              "blocks": {}
+            },
             "product_title_YXxMTj": {
               "type": "product-title",
               "name": "t:names.product_title",
@@ -245,11 +272,15 @@
           },
           "block_order": [
             "product_card_gallery_677WP3",
+            "swatches_kXjm3j",
             "product_title_YXxMTj",
             "price_JQzVV4"
           ]
         }
       },
+      "block_order": [
+        "product_inventory_JGfGFy"
+      ],
       "name": "Featured collection",
       "settings": {
         "collection": "best-sellers",

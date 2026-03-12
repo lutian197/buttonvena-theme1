@@ -375,22 +375,3 @@
     }
   }
 {% endstylesheet %}
-
-{% comment %} Debug: Print product_resource to console {% endcomment %}
-{% if product_resource != blank %}
-  <script>
-    (function() {
-      try {
-        const productData = {{ product_resource | json }};
-        console.log('product_resource:', productData);
-        console.log('product_resource (formatted):', JSON.stringify(productData, null, 2));
-      } catch (error) {
-        console.error('Error logging product_resource:', error);
-      }
-    })();
-  </script>
-{% else %}
-  <script>
-    console.log('product_resource: blank or null');
-  </script>
-{% endif %}
