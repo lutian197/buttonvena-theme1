@@ -71,7 +71,8 @@ select {
 .predictive-search-results__card--product,
 .predictive-search-results__card {
   position: relative;
-  transition: transform var(--hover-transition-duration) var(--hover-transition-timing),
+  transition:
+    transform var(--hover-transition-duration) var(--hover-transition-timing),
     box-shadow var(--hover-transition-duration) var(--hover-transition-timing);
   will-change: transform, box-shadow;
   z-index: var(--layer-flat);
@@ -912,7 +913,8 @@ a {
   text-decoration-color: transparent;
   text-decoration-thickness: 0.075em;
   text-underline-offset: 0.125em;
-  transition: text-decoration-color var(--animation-speed) var(--animation-easing),
+  transition:
+    text-decoration-color var(--animation-speed) var(--animation-easing),
     color var(--animation-speed) var(--animation-easing);
 }
 
@@ -1155,7 +1157,8 @@ ul[product-grid-view='zoom-out'] .card-gallery > img {
 
 results-list[initialized] {
   .product-grid__item {
-    transition: opacity var(--animation-speed) var(--animation-easing),
+    transition:
+      opacity var(--animation-speed) var(--animation-easing),
       transform var(--animation-speed) var(--animation-easing);
 
     @starting-style {
@@ -1302,7 +1305,8 @@ button.shopify-payment-button__button--unbranded {
   font-size: var(--font-paragraph--size);
   line-height: var(--font-paragraph--line-height);
   margin-block: 0;
-  transition: color var(--animation-speed) var(--animation-easing),
+  transition:
+    color var(--animation-speed) var(--animation-easing),
     box-shadow var(--animation-speed) var(--animation-easing),
     background-color var(--animation-speed) var(--animation-easing);
   cursor: pointer;
@@ -2145,8 +2149,8 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   product-card:focus-within .quick-add__button,
   .card-gallery:hover .quick-add__button {
     display: grid;
-    will-change: margin, opacity;
-    animation: elementSlideInTop var(--animation-speed) var(--animation-easing);
+    /* will-change: margin, opacity;
+    animation: elementSlideInTop var(--animation-speed) var(--animation-easing); */
   }
 }
 
@@ -2380,7 +2384,9 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   flex-grow: 1;
   text-align: left;
   border-radius: var(--style-border-radius-inputs);
-  transition: box-shadow var(--animation-speed) ease, background-color var(--animation-speed) ease;
+  transition:
+    box-shadow var(--animation-speed) ease,
+    background-color var(--animation-speed) ease;
   padding: var(--input-padding);
   box-shadow: var(--input-box-shadow);
   background-color: var(--color-input-background);
@@ -2417,7 +2423,9 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   margin-bottom: 0;
   pointer-events: none;
   position: absolute;
-  transition: top var(--animation-speed) ease, font-size var(--animation-speed) ease;
+  transition:
+    top var(--animation-speed) ease,
+    font-size var(--animation-speed) ease;
 }
 
 /* RTE styles */
@@ -4094,7 +4102,8 @@ accordion-custom {
       overflow-y: clip;
       opacity: 0;
       interpolate-size: allow-keywords;
-      transition: content-visibility var(--animation-speed-slow) allow-discrete,
+      transition:
+        content-visibility var(--animation-speed-slow) allow-discrete,
         padding-block var(--animation-speed-slow) var(--animation-easing),
         opacity var(--animation-speed-slow) var(--animation-easing),
         block-size var(--animation-speed-slow) var(--animation-easing);
@@ -4258,7 +4267,8 @@ text-component {
 .predictive-search-results__card:hover {
   position: relative;
   z-index: var(--layer-raised);
-  transition: transform var(--hover-transition-duration) var(--hover-transition-timing),
+  transition:
+    transform var(--hover-transition-duration) var(--hover-transition-timing),
     box-shadow var(--hover-transition-duration) var(--hover-transition-timing);
 }
 
@@ -4301,5 +4311,11 @@ text-component {
   .h6.h6 textarea,
   .h6.h6 select {
     font-size: max(1rem, 100%);
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .product-card__content > product-swatches {
+    display: none;
   }
 }

@@ -448,10 +448,8 @@
 
   .variant-option__button-label:has(:focus-visible) {
     --variant-picker-stroke-color: var(--color-foreground);
-
+    /* 保留按钮样式变更，但不再用 outline 高亮 */
     border-color: var(--color-foreground);
-    outline: var(--focus-outline-width) solid var(--color-foreground);
-    outline-offset: var(--focus-outline-offset);
   }
 
   .variant-option__button-label--has-swatch {
@@ -482,71 +480,21 @@
     color: rgb(var(--color-variant-text-rgb) / var(--opacity-60));
   }
 
-  .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
-    --focus-outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55));
-
-    outline: var(--focus-outline);
-    outline-offset: var(--focus-outline-offset);
+  /* 色卡（swatch）选中/悬停时，直接通过边框颜色高亮，而不是使用 outline */
+  .variant-option__button-label--has-swatch .swatch {
+    /* 默认继承 base.css 中的 --color-border 定义 */
   }
 
-  .facets__inputs-list--swatches-grid .variant-option__button-label:has(:focus-visible) .swatch {
-    --focus-outline: var(--focus-outline-width) solid currentcolor;
-
-    outline: var(--focus-outline);
-    outline-offset: var(--focus-outline-offset);
+  .variant-option__button-label--has-swatch:hover .swatch {
+    --color-border: var(--color-variant-hover-border);
   }
 
-  .facets__inputs-list--swatches-grid .variant-option__button-label:has(:focus-visible) {
-    outline: none;
+  .variant-option__button-label--has-swatch:has(:checked) .swatch {
+    --color-border: var(--color-selected-variant-border);
   }
 
-  .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover {
-    outline: none;
-  }
-
-  .variant-option__button-label--has-swatch:hover {
-    outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55));
-    outline-offset: var(--focus-outline-offset);
-  }
-
-  .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:has(:checked) {
-    --focus-outline: none;
-  }
-
-  .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:has(:checked) .swatch {
-    outline: var(--focus-outline);
-    outline-offset: var(--focus-outline-offset);
-  }
-
-  .variant-option__button-label--has-swatch:has(:checked) {
-    --focus-outline: var(--focus-outline-width) solid var(--color-foreground);
-
-    outline: var(--focus-outline);
-    outline-offset: var(--focus-outline-offset);
-  }
-
-  /* This triggers iOS < 16.4. The outline bug is not recognized as a lack of @supports */
-  @supports not (background-color: rgb(from red 150 g b / alpha)) {
-    /** There is a bug in safari < 16.4 that causes the outline to not follow the elements border radius. This is a workaround. **/
-    .variant-option__button-label--has-swatch:has(:checked),
-    .variant-option__button-label:has(:focus-visible) .swatch,
-    .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch {
-      outline: none;
-      position: relative;
-      overflow: visible;
-    }
-
-    .variant-option__button-label--has-swatch:has(:checked)::after,
-    .variant-option__button-label:has(:focus-visible) .swatch::after,
-    .facets__inputs-list--swatches-grid .variant-option__button-label--has-swatch:hover .swatch::after {
-      content: '';
-      position: absolute;
-      inset: calc(-1 * var(--focus-outline-offset));
-      border: var(--focus-outline);
-      border-radius: var(--focus-outline-radius, 50%);
-      background-color: transparent;
-      display: inherit;
-    }
+  .variant-option__button-label--has-swatch:has(:checked):hover .swatch {
+    --color-border: var(--color-selected-variant-hover-border);
   }
 
   .variant-option__button-label:has([data-option-available='false']):has(:checked) {

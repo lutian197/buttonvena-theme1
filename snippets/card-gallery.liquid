@@ -66,6 +66,57 @@
 
   assign all_media = product.media
 
+  assign product_has_swatches = false
+  for product_option in product.options_with_values
+    assign swatch_count = product_option.values | map: 'swatch' | compact | size
+    if swatch_count > 0
+      assign product_has_swatches = true
+      break
+    endif
+  endfor
+
+  assign product_form_id = 'QuickAdd-ProductForm-' | append: product.id | append: '-' | append: block.id
+  assign add_to_cart_text = 'actions.add' | t
+  assign variant_to_use = product.selected_or_first_available_variant
+  assign combined_listing_count = product.options_with_values | map: 'values' | map: 'product_url' | compact | size
+
+  unless combined_listing_count > 0
+    assign first_image = product.media.first
+    assign variant_images = product.images | where: 'attached_to_variant?', true
+    assign swatch_variant_picker = null
+    for option in product.options_with_values
+      assign swatch_count = option.values | map: 'swatch' | compact | size
+      if swatch_count > 0
+        assign swatch_variant_picker = option
+        break
+      endif
+    endfor
+
+    if swatch_variant_picker
+      assign swatch_count = swatch_variant_picker.values | map: 'swatch' | compact | size
+      if swatch_count == 1
+        assign variant_to_use = swatch_variant_picker.values.first.variant
+      elsif swatch_count > 1
+        if first_image and variant_images contains first_image
+          for option_value in swatch_variant_picker.values
+            if option_value.variant.featured_media.id == first_image.id
+              assign variant_to_use = option_value.variant
+              break
+            endif
+          endfor
+        elsif variant_images.size == 0
+          assign variant_to_use = swatch_variant_picker.values.first.variant
+        endif
+      endif
+    endif
+  endunless
+
+  if variant_to_use.available
+    assign can_add_to_cart = true
+  else
+    assign can_add_to_cart = false
+  endif
+
   # For combined listings: make sure to include the featured media of the color variants so that the swatch picker
   # works as expected.
   for product_option in product.options_with_values
@@ -224,6 +275,66 @@
         attributes: slideshow_attributes
       %}
     </a>
+    {% if product != blank and all_media.size > 0 %}
+      <div class="card-gallery__buttons">
+        {% if product_has_swatches %}
+          <product-swatches
+            data-product-id="{{ product.id }}"
+            data-product-url="{{ product.url }}"
+            class="card-swatches--mobile"
+          >
+            {% render 'variant-swatches', product_resource: product %}
+          </product-swatches>
+        {% endif %}
+
+        <div style="flex: 1;"></div>
+
+        <div class="card-gallery__add-to-cart">
+          <product-form-component
+            data-section-id="{{ section.id }}"
+            data-product-id="{{ product.id }}"
+            on:submit="/handleSubmit"
+            class="card-gallery__product-form"
+          >
+            <div
+              class="visually-hidden"
+              aria-live="assertive"
+              role="status"
+              aria-atomic="true"
+              ref="liveRegion"
+            ></div>
+            {%- form 'product',
+              product,
+              id: product_form_id,
+              novalidate: 'novalidate',
+              data-type: 'add-to-cart-form'
+            -%}
+              <input
+                type="hidden"
+                name="id"
+                ref="variantId"
+                value="{{ variant_to_use.id }}"
+                {% if variant_to_use.available == false %}
+                  disabled
+                {% endif %}
+              >
+              <input
+                type="hidden"
+                name="quantity"
+                value="{% if variant_to_use.quantity_rule.min %}{{ variant_to_use.quantity_rule.min }}{% else %}1{% endif %}"
+              >
+              {% render 'add-to-cart-button',
+                add_to_cart_text: add_to_cart_text,
+                class: 'button quick-add__button card-gallery__add-to-cart-button',
+                can_add_to_cart: can_add_to_cart,
+                icon_only_on_mobile: true,
+                product: product
+              %}
+            {%- endform -%}
+          </product-form-component>
+        </div>
+      </div>
+    {% endif %}
   {% elsif product != blank and product.media.size == 0 %}
     <product-title class="product-card-gallery__title-placeholder">
       <a
@@ -259,6 +370,138 @@
     overflow: hidden;
     container-type: inline-size; /* Make card-gallery a container */
     container-name: card-gallery-container; /* Optional: name the container */
+  }
+
+  .card-gallery__buttons {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: var(--layer-raised, 2);
+  }
+
+  .card-gallery__buttons > * {
+    pointer-events: auto;
+  }
+
+  .card-gallery__buttons .card-swatches--mobile {
+    width: auto;
+  }
+  @media screen and (max-width: 749px) {
+    .card-gallery__buttons .card-swatches--mobile {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .card-gallery product-swatches {
+      --variant-picker-swatch-width: clamp(32px, 4vw, 64px); /* 桌面 */
+      --variant-picker-swatch-height: clamp(32px, 4vw, 64px);
+    }
+  }
+
+  .quick-add__button {
+    display: grid;
+    padding: var(--padding-xs);
+    align-items: center;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    border-color: transparent;
+    box-shadow: var(--shadow-popover);
+    pointer-events: all;
+    position: relative;
+    overflow: hidden;
+    border-radius: 100px;
+
+    @media screen and (min-width: 750px) {
+      /* display: none; */
+      padding: var(--padding-xs) var(--padding-sm);
+    }
+
+    .quick-add[stay-visible] & {
+      display: grid;
+    }
+  }
+
+  .quick-add__button .add-to-cart-text {
+    gap: 0;
+    line-height: 1;
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+    animation: none;
+
+    @media screen and (min-width: 750px) {
+      /* offset button padding to show a round button in a collapsed state */
+      margin-inline: calc(var(--padding-sm) * -1);
+      padding-inline: var(--padding-xs);
+    }
+  }
+
+  .quick-add__button .add-to-cart-text--added {
+    position: relative;
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+    justify-self: end;
+    line-height: 1;
+
+    @media screen and (min-width: 750px) {
+      width: 0;
+    }
+  }
+
+  .quick-add__button .add-to-cart-text__content {
+    width: 0;
+    opacity: 0;
+    transform: translateX(1em);
+    transition: width var(--animation-speed) ease-in-out, opacity var(--animation-speed) ease-in-out,
+      transform var(--animation-speed) ease-in-out;
+    interpolate-size: allow-keywords;
+    will-change: width, opacity, transform;
+  }
+
+  @container (min-width: 99px) {
+    .quick-add[stay-visible] .add-to-cart-text,
+    .quick-add__button:is(:focus, :hover) .add-to-cart-text {
+      gap: var(--gap-2xs);
+
+      @media screen and (min-width: 750px) {
+        /* offset button padding to show a round button in a collapsed state */
+        margin-inline: 0;
+        padding-inline: 0;
+      }
+    }
+
+    .quick-add[stay-visible] .add-to-cart-text__content,
+    .quick-add__button:is(:focus, :hover) .add-to-cart-text__content {
+      width: fit-content;
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .quick-add__button.atc-added .add-to-cart-text {
+    opacity: 0;
+  }
+
+  .quick-add__button.atc-added .add-to-cart-text--added {
+    opacity: 1;
+    width: auto;
+
+    @supports (width: calc-size(auto, size)) {
+      width: calc-size(auto, size);
+    }
+  }
+
+  .quick-add__button.atc-added .add-to-cart-text {
+    animation-name: atc-fade-out;
+  }
+
+  .quick-add__button.atc-added .add-to-cart-text--added {
+    animation-name: atc-fade-in;
   }
 
   .card-gallery__placeholder svg {
