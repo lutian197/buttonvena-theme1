@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "main": {
       "type": "main-page",
@@ -34,6 +35,36 @@
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "button_LeFWrc": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Follow Us on Instagram",
+            "link": "https://www.instagram.com/buttonvena/",
+            "open_in_new_tab": true,
+            "style_class": "button",
+            "width": "custom",
+            "custom_width": 40,
+            "width_mobile": "custom",
+            "custom_width_mobile": 80
+          },
+          "blocks": {}
+        },
+        "button_JPrcDw": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Follow Us on Tiktok",
+            "link": "https://www.tiktok.com/@buttonvena",
+            "open_in_new_tab": true,
+            "style_class": "button",
+            "width": "custom",
+            "custom_width": 40,
+            "width_mobile": "custom",
+            "custom_width_mobile": 80
           },
           "blocks": {}
         },
@@ -66,6 +97,8 @@
       },
       "block_order": [
         "title",
+        "button_LeFWrc",
+        "button_JPrcDw",
         "content"
       ],
       "settings": {

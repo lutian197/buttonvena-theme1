@@ -57,10 +57,10 @@
       "name": "t:names.collection_links_text",
       "settings": {
         "collection_list": [
-          "all",
+          "all-button-covers",
           "best-sellers",
-          "the-basic-collection",
-          "floral",
+          "the-basic-button-covers",
+          "floral-button-covers",
           "gold-button-covers",
           "pearls-button-covers",
           "rhinestone-button-covers",

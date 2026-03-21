@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "main": {
       "type": "main-404",
@@ -255,7 +256,7 @@
       },
       "name": "Featured collection",
       "settings": {
-        "collection": "all",
+        "collection": "all-button-covers",
         "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 4,

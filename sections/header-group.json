@@ -26,14 +26,28 @@
             "case": "none"
           },
           "blocks": {}
+        },
+        "announcement_AbGxPE": {
+          "type": "_announcement",
+          "settings": {
+            "text": "Launch Week Only: Unlock complimentary \"Founder's set\" with orders over $100. [Included in your delivery.]",
+            "link": "",
+            "font": "var(--font-subheading--family)",
+            "font_size": "0.75rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "announcement_BxgCk9"
+        "announcement_BxgCk9",
+        "announcement_AbGxPE"
       ],
       "name": "t:names.announcement_bar",
       "settings": {
-        "speed": 5,
+        "speed": 3,
         "section_width": "page-width",
         "color_scheme": "scheme-1",
         "divider_width": 1,
