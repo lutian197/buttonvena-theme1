@@ -275,6 +275,12 @@
               },
               "blocks": {}
             },
+            "avada_boost_sales_trust_badge_app_badge_v2_block_X4bY3t": {
+              "type": "shopify://apps/avada-boost-sales-trust-badge/blocks/app-badge-v2-block/45454b7f-f6a7-4852-b770-8e0c3992a226",
+              "settings": {
+                "badge_id": "AVD-27385623"
+              }
+            },
             "accordion_Va9EgM": {
               "type": "accordion",
               "name": "t:names.accordion",
@@ -508,6 +514,7 @@
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
             "payment_icons_eVGCFz",
+            "avada_boost_sales_trust_badge_app_badge_v2_block_X4bY3t",
             "accordion_Va9EgM"
           ]
         }
