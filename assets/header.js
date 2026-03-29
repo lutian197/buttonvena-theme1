@@ -5,7 +5,7 @@ import { onDocumentLoaded, changeMetaThemeColor } from '@theme/utilities';
 /**
  * @typedef {Object} HeaderComponentRefs
  * @property {HTMLDivElement} headerDrawerContainer - The header drawer container element
- * @property {HTMLElement} headerMenu - The header menu element
+ * @property {HTMLElement} [headerMenu] - Optional mega menu (drawer-only themes omit this)
  * @property {HTMLElement} headerRowTop - The header top row element
  */
 
@@ -20,7 +20,7 @@ import { onDocumentLoaded, changeMetaThemeColor } from '@theme/utilities';
  */
 
 class HeaderComponent extends Component {
-  requiredRefs = ['headerDrawerContainer', 'headerMenu', 'headerRowTop'];
+  requiredRefs = ['headerDrawerContainer', 'headerRowTop'];
 
   /**
    * Width of window when header drawer was hidden
@@ -114,14 +114,17 @@ class HeaderComponent extends Component {
    * @param {boolean} hideMenu - Whether to hide the menu and show the drawer
    */
   #updateMenuVisibility(hideMenu) {
+    const { headerMenu, headerDrawerContainer } = this.refs;
+    if (!headerMenu) return;
+
     if (hideMenu) {
-      this.refs.headerDrawerContainer.classList.remove('desktop:hidden');
+      headerDrawerContainer.classList.remove('desktop:hidden');
       this.#menuDrawerHiddenWidth = window.innerWidth;
-      this.refs.headerMenu.classList.add('hidden');
+      headerMenu.classList.add('hidden');
     } else {
-      this.refs.headerDrawerContainer.classList.add('desktop:hidden');
+      headerDrawerContainer.classList.add('desktop:hidden');
       this.#menuDrawerHiddenWidth = null;
-      this.refs.headerMenu.classList.remove('hidden');
+      headerMenu.classList.remove('hidden');
     }
   }
 
