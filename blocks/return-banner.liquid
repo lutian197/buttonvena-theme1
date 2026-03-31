@@ -1,0 +1,53 @@
+<div
+  class="return-banner spacing-style"
+  style="{% render 'spacing-padding', settings: block.settings %}"
+  {{ block.shopify_attributes }}
+>
+  {% assign icon = block.settings.icon %}
+
+  {% if icon != blank %}
+    <img
+      src="{{ icon | image_url: width: 16, height: 16, crop: 'center' }}"
+      alt="{{ icon.alt | escape }}"
+      width="16"
+      height="16"
+      loading="lazy"
+      style="width:16px; height:16px; display:block; flex-shrink:0;"
+    >
+  {% endif %}
+  <span class="return-banner__text">14-Day Easy Return</span>
+</div>
+
+{% stylesheet %}
+  .return-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .return-banner__text {
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.return_banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "icon",
+      "label": "Icon Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.return_banner",
+      "category": "t:categories.banners"
+    }
+  ]
+}
+{% endschema %}
