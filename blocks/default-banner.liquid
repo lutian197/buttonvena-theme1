@@ -1,0 +1,125 @@
+<div
+  class="icon-text-grid"
+  style="
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
+    column-gap: {{ section.settings.column_gap }}px;
+    row-gap: {{ section.settings.row_gap }}px;
+  "
+>
+  {% for block in section.blocks %}
+    {% if block.type == 'cell' %}
+      <div
+        class="icon-text-cell"
+        style="display: flex; align-items: center; gap: {{ block.settings.icon_text_gap }}px;"
+        {{ block.shopify_attributes }}
+      >
+        {% if block.settings.icon != blank %}
+          <img
+            src="{{ block.settings.icon | image_url: width: block.settings.icon_width, height: block.settings.icon_height, crop: 'center' }}"
+            alt="{{ block.settings.icon.alt | escape }}"
+            style="width: {{ block.settings.icon_width }}px; height: {{ block.settings.icon_height }}px; flex-shrink: 0;"
+            loading="lazy"
+          >
+        {% endif %}
+        {% if block.settings.text != blank %}
+          <span style="font-size: {{ block.settings.font_size }}px; font-weight: {{ block.settings.font_weight }};">
+            {{ block.settings.text }}
+          </span>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+{% stylesheet %}
+  .return-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .return-banner__text {
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.grid_banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "icon",
+      "label": "t:settings.image_icon"
+    },
+    {
+      "type": "range",
+      "id": "icon_width",
+      "label": "图标宽度 (px)",
+      "min": 8,
+      "max": 64,
+      "step": 2,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "icon_height",
+      "label": "图标高度 (px)",
+      "min": 8,
+      "max": 64,
+      "step": 2,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "文字",
+      "default": "Label"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "字号 (px)",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "字重",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "SemiBold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "icon_text_gap",
+      "label": "图标与文字间距 (px)",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "default": 8,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.grid_banner",
+      "category": "t:categories.banners"
+    }
+  ]
+}
+{% endschema %}
