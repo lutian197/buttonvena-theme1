@@ -1,65 +1,57 @@
 <div
-  class="icon-text-grid"
-  style="
-    display: grid;
-    grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
-    column-gap: {{ section.settings.column_gap }}px;
-    row-gap: {{ section.settings.row_gap }}px;
-  "
+  class="default-banner"
+  style="gap: {{ block.settings.icon_text_gap }}px;"
+  {{ block.shopify_attributes }}
 >
-  {% for block in section.blocks %}
-    {% if block.type == 'cell' %}
-      <div
-        class="icon-text-cell"
-        style="display: flex; align-items: center; gap: {{ block.settings.icon_text_gap }}px;"
-        {{ block.shopify_attributes }}
-      >
-        {% if block.settings.icon != blank %}
-          <img
-            src="{{ block.settings.icon | image_url: width: block.settings.icon_width, height: block.settings.icon_height, crop: 'center' }}"
-            alt="{{ block.settings.icon.alt | escape }}"
-            style="width: {{ block.settings.icon_width }}px; height: {{ block.settings.icon_height }}px; flex-shrink: 0;"
-            loading="lazy"
-          >
-        {% endif %}
-        {% if block.settings.text != blank %}
-          <span style="font-size: {{ block.settings.font_size }}px; font-weight: {{ block.settings.font_weight }};">
-            {{ block.settings.text }}
-          </span>
-        {% endif %}
-      </div>
-    {% endif %}
-  {% endfor %}
+  {% if block.settings.icon != blank %}
+    <img
+      src="{{ block.settings.icon | image_url: width: block.settings.icon_width, height: block.settings.icon_height, crop: 'center' }}"
+      alt="{{ block.settings.icon.alt | escape }}"
+      width="{{ block.settings.icon_width }}"
+      height="{{ block.settings.icon_height }}"
+      style="width: {{ block.settings.icon_width }}px; height: {{ block.settings.icon_height }}px; flex-shrink: 0;"
+      loading="lazy"
+    >
+  {% endif %}
+
+  {% if block.settings.text != blank %}
+    <span style="font-size: {{ block.settings.font_size }}px; font-weight: {{ block.settings.font_weight }};">
+      {{ block.settings.text }}
+    </span>
+  {% endif %}
 </div>
 
 {% stylesheet %}
-  .return-banner {
+  .default-banner {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-  }
-
-  .return-banner__text {
-    font-size: 12px;
-    font-weight: 600;
-    white-space: nowrap;
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:names.grid_banner",
+  "name": "t:names.default_banner",
   "settings": [
+    {
+      "type": "range",
+      "id": "icon_text_gap",
+      "label": "t:settings.gap",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "default": 8,
+      "unit": "px"
+    },
     {
       "type": "image_picker",
       "id": "icon",
-      "label": "t:settings.image_icon"
+      "label": "t:settings.icon"
     },
     {
       "type": "range",
       "id": "icon_width",
-      "label": "图标宽度 (px)",
+      "label": "t:settings.width",
       "min": 8,
       "max": 64,
       "step": 2,
@@ -69,7 +61,7 @@
     {
       "type": "range",
       "id": "icon_height",
-      "label": "图标高度 (px)",
+      "label": "t:settings.height",
       "min": 8,
       "max": 64,
       "step": 2,
@@ -79,46 +71,60 @@
     {
       "type": "text",
       "id": "text",
-      "label": "文字",
-      "default": "Label"
+      "label": "t:settings.text",
+      "default": "text"
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "font_size",
-      "label": "字号 (px)",
-      "min": 10,
-      "max": 32,
-      "step": 1,
-      "default": 12,
-      "unit": "px"
+      "label": "t:settings.size",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "0.625rem",
+          "label": "10px"
+        },
+        {
+          "value": "0.75rem",
+          "label": "12px"
+        },
+        {
+          "value": "0.875rem",
+          "label": "14px"
+        },
+        {
+          "value": "1rem",
+          "label": "16px"
+        },
+        {
+          "value": "1.125rem",
+          "label": "18px"
+        },
+        {
+          "value": "1.25rem",
+          "label": "20px"
+        },
+        {
+          "value": "1.5rem",
+          "label": "24px"
+        }
+      ],
+      "default": "1rem"
     },
     {
       "type": "select",
       "id": "font_weight",
-      "label": "字重",
+      "label": "t:settings.font_weight",
       "options": [
-        { "value": "400", "label": "Regular" },
-        { "value": "500", "label": "Medium" },
-        { "value": "600", "label": "SemiBold" },
-        { "value": "700", "label": "Bold" }
+        { "value": "400", "label": "t:options.regular" },
+        { "value": "500", "label": "t:options.medium" },
+        { "value": "600", "label": "t:options.semibold" },
+        { "value": "700", "label": "t:options.bold" }
       ],
       "default": "400"
-    },
-    {
-      "type": "range",
-      "id": "icon_text_gap",
-      "label": "图标与文字间距 (px)",
-      "min": 0,
-      "max": 32,
-      "step": 2,
-      "default": 8,
-      "unit": "px"
-    }
-  ],
-  "presets": [
-    {
-      "name": "t:names.grid_banner",
-      "category": "t:categories.banners"
     }
   ]
 }

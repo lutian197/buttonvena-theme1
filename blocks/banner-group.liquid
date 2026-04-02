@@ -2,8 +2,10 @@
   style="
     display: grid;
     grid-template-columns: repeat({{ block.settings.columns }}, 1fr);
-    column-gap: {{ block.settings.column_gap }}px;
-    row-gap: {{ block.settings.row_gap }}px;
+    grid-template-rows: repeat({{ block.settings.rows }}, 1fr);
+    grid-gap: {{ block.settings.row_gap }}px {{ block.settings.column_gap }}px;
+    padding: {{ block.settings.padding_top }}px {{ block.settings.padding_right }}px {{ block.settings.padding_bottom }}px {{ block.settings.padding_left }}px;
+    background-color: {{ block.settings.background_color }};
   "
   {{ block.shopify_attributes }}
 >
@@ -39,6 +41,15 @@
     },
     {
       "type": "range",
+      "id": "rows",
+      "label": "行数",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
       "id": "row_gap",
       "label": "行间距 (px)",
       "min": 8,
@@ -53,7 +64,7 @@
     },
     {
       "type": "range",
-      "id": "padding-block-start",
+      "id": "padding_top",
       "label": "t:settings.top",
       "min": 0,
       "max": 100,
@@ -63,7 +74,7 @@
     },
     {
       "type": "range",
-      "id": "padding-block-end",
+      "id": "padding_bottom",
       "label": "t:settings.bottom",
       "min": 0,
       "max": 100,
@@ -73,7 +84,7 @@
     },
     {
       "type": "range",
-      "id": "padding-inline-start",
+      "id": "padding_left",
       "label": "t:settings.left",
       "min": 0,
       "max": 100,
@@ -83,7 +94,7 @@
     },
     {
       "type": "range",
-      "id": "padding-inline-end",
+      "id": "padding_right",
       "label": "t:settings.right",
       "min": 0,
       "max": 100,
@@ -92,18 +103,11 @@
       "default": 0
     },
     {
-      "type": "checkbox",
-      "id": "background",
-      "label": "t:settings.background",
-      "default": false
-    },
-    {
       "type": "color",
       "id": "background_color",
       "label": "t:settings.background_color",
       "alpha": true,
-      "default": "#00000026",
-      "visible_if": "{{ block.settings.background }}"
+      "default": "transparent"
     }
   ],
   "presets": [
