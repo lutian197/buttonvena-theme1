@@ -14,9 +14,17 @@
     >
   {% endif %}
 
-  {% if block.settings.text != blank %}
-    <span style="font-size: {{ block.settings.font_size }}px; font-weight: {{ block.settings.font_weight }};">
-      {{ block.settings.text }}
+  {% if block.settings.metafield_key != blank %}
+    {% assign banner_text = product.metafields.custom[block.settings.metafield_key].value
+      | default: block.settings.text
+    %}
+  {% else %}
+    {% assign banner_text = block.settings.text %}
+  {% endif %}
+
+  {% if banner_text != blank %}
+    <span style="font-size: {{ block.settings.font_size }}; font-weight: {{ block.settings.font_weight }};">
+      {{ banner_text }}
     </span>
   {% endif %}
 </div>
@@ -75,6 +83,12 @@
       "default": "text"
     },
     {
+      "type": "text",
+      "id": "metafield_key",
+      "label": "Metafield key",
+      "placeholder": "Product metafield definitions"
+    },
+    {
       "type": "select",
       "id": "font_size",
       "label": "t:settings.size",
@@ -120,9 +134,7 @@
       "label": "t:settings.font_weight",
       "options": [
         { "value": "400", "label": "t:options.regular" },
-        { "value": "500", "label": "t:options.medium" },
-        { "value": "600", "label": "t:options.semibold" },
-        { "value": "700", "label": "t:options.bold" }
+        { "value": "600", "label": "t:options.semibold" }
       ],
       "default": "400"
     }
