@@ -275,11 +275,79 @@
               },
               "blocks": {}
             },
-            "avada_boost_sales_trust_badge_app_badge_v2_block_X4bY3t": {
-              "type": "shopify://apps/avada-boost-sales-trust-badge/blocks/app-badge-v2-block/45454b7f-f6a7-4852-b770-8e0c3992a226",
+            "group_RXcc7r": {
+              "type": "group",
+              "name": "t:names.group",
               "settings": {
-                "badge_id": "AVD-27385623"
-              }
+                "content_direction": "row",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "center",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 20,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "default_banner_QJAPi4": {
+                  "type": "default-banner",
+                  "name": "t:names.default_banner",
+                  "settings": {
+                    "icon_text_gap": 8,
+                    "icon": "shopify://shop_images/25408f8e6864d924d3e3cbcf754e7433_fd3e315d-1960-4f9f-af85-2b3399ac3e73.jpg",
+                    "icon_width": 26,
+                    "icon_height": 16,
+                    "text": "Free U.S. Shipping over $50",
+                    "font_size": "1rem",
+                    "font_weight": "400"
+                  },
+                  "blocks": {}
+                },
+                "default_banner_UaYLri": {
+                  "type": "default-banner",
+                  "name": "t:names.default_banner",
+                  "settings": {
+                    "icon_text_gap": 8,
+                    "icon": "shopify://shop_images/return_icon1.jpg",
+                    "icon_width": 16,
+                    "icon_height": 16,
+                    "text": "14-Day Easy Return",
+                    "font_size": "1rem",
+                    "font_weight": "400"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "default_banner_QJAPi4",
+                "default_banner_UaYLri"
+              ]
             },
             "accordion_Va9EgM": {
               "type": "accordion",
@@ -514,7 +582,7 @@
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
             "payment_icons_eVGCFz",
-            "avada_boost_sales_trust_badge_app_badge_v2_block_X4bY3t",
+            "group_RXcc7r",
             "accordion_Va9EgM"
           ]
         }
