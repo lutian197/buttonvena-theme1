@@ -31,7 +31,7 @@
         "announcement_BxgCk9": {
           "type": "_announcement",
           "settings": {
-            "text": "Free shipping on orders above $50",
+            "text": "Complimentary shipping on all orders over $50",
             "link": "",
             "font": "var(--font-subheading--family)",
             "font_size": "0.875rem",

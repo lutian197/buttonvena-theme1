@@ -190,12 +190,100 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {}
+                },
+                "banner_group_4Db848": {
+                  "type": "banner-group",
+                  "name": "t:names.banner_group",
+                  "settings": {
+                    "columns": 2,
+                    "column_gap": 8,
+                    "rows": 1,
+                    "row_gap": 8,
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "background_color": "#ffffff"
+                  },
+                  "blocks": {
+                    "default_banner_6Lg9VX": {
+                      "type": "default-banner",
+                      "name": "t:names.default_banner",
+                      "settings": {
+                        "icon_text_gap": 8,
+                        "horizontal_alignment": "flex-start",
+                        "icon": "shopify://shop_images/Screenshot_2026-04-04_234307.jpg",
+                        "icon_width": 16,
+                        "icon_height": 16,
+                        "text": "Designed in Boston",
+                        "metafield_key": "",
+                        "font_size": "0.75rem",
+                        "font_weight": "400"
+                      },
+                      "blocks": {}
+                    },
+                    "default_banner_8f8aQe": {
+                      "type": "default-banner",
+                      "name": "t:names.default_banner",
+                      "settings": {
+                        "icon_text_gap": 8,
+                        "horizontal_alignment": "flex-start",
+                        "icon": "shopify://shop_images/diamond_icon_fc240907-b3b2-4206-a6fd-026290d0f59c.jpg",
+                        "icon_width": 16,
+                        "icon_height": 16,
+                        "text": "{{ closest.product.metafields.custom.product_material.value }}",
+                        "metafield_key": "",
+                        "font_size": "0.75rem",
+                        "font_weight": "400"
+                      },
+                      "blocks": {}
+                    },
+                    "default_banner_TTiAmN": {
+                      "type": "default-banner",
+                      "name": "t:names.default_banner",
+                      "settings": {
+                        "icon_text_gap": 8,
+                        "horizontal_alignment": "flex-start",
+                        "icon": "shopify://shop_images/Material_7b7dcf17-005c-4ec7-a389-95bb257df1fd.jpg",
+                        "icon_width": 16,
+                        "icon_height": 16,
+                        "text": "{{ closest.product.metafields.custom.product_craft.value }}",
+                        "metafield_key": "",
+                        "font_size": "0.75rem",
+                        "font_weight": "400"
+                      },
+                      "blocks": {}
+                    },
+                    "default_banner_NzUcTt": {
+                      "type": "default-banner",
+                      "name": "t:names.default_banner",
+                      "settings": {
+                        "icon_text_gap": 8,
+                        "horizontal_alignment": "flex-start",
+                        "icon": "shopify://shop_images/Click.jpg",
+                        "icon_width": 16,
+                        "icon_height": 16,
+                        "text": "Easy Click & Style",
+                        "metafield_key": "",
+                        "font_size": "0.75rem",
+                        "font_weight": "400"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "default_banner_6Lg9VX",
+                    "default_banner_8f8aQe",
+                    "default_banner_TTiAmN",
+                    "default_banner_NzUcTt"
+                  ]
                 }
               },
               "block_order": [
                 "text_xrnftG",
                 "price_tVjtKg",
-                "text_QYaqfx"
+                "text_QYaqfx",
+                "banner_group_4Db848"
               ]
             },
             "judge_me_reviews_preview_badge_Yyr6r4": {
@@ -226,6 +314,10 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "avada_boost_sales_trust_badge_app_stock_countdown_block_WLJqW9": {
+              "type": "shopify://apps/avada-boost-sales-trust-badge/blocks/app-stock-countdown-block/45454b7f-f6a7-4852-b770-8e0c3992a226",
+              "settings": {}
             },
             "buy_buttons_eYQEYi": {
               "type": "buy-buttons",
@@ -320,8 +412,9 @@
                   "name": "t:names.default_banner",
                   "settings": {
                     "icon_text_gap": 8,
-                    "icon": "shopify://shop_images/25408f8e6864d924d3e3cbcf754e7433_fd3e315d-1960-4f9f-af85-2b3399ac3e73.jpg",
-                    "icon_width": 26,
+                    "horizontal_alignment": "flex-start",
+                    "icon": "shopify://shop_images/25408f8e6864d924d3e3cbcf754e7433.jpg",
+                    "icon_width": 16,
                     "icon_height": 16,
                     "text": "Free U.S. Shipping over $50",
                     "metafield_key": "",
@@ -335,6 +428,7 @@
                   "name": "t:names.default_banner",
                   "settings": {
                     "icon_text_gap": 8,
+                    "horizontal_alignment": "flex-start",
                     "icon": "shopify://shop_images/return_icon1.jpg",
                     "icon_width": 16,
                     "icon_height": 16,
@@ -582,6 +676,7 @@
             "judge_me_reviews_preview_badge_Yyr6r4",
             "divider_VJhene",
             "variant_picker_R3rGDr",
+            "avada_boost_sales_trust_badge_app_stock_countdown_block_WLJqW9",
             "buy_buttons_eYQEYi",
             "payment_icons_eVGCFz",
             "group_RXcc7r",
