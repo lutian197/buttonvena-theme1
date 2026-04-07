@@ -1,6 +1,6 @@
 <div
   class="default-banner"
-  style="gap: {{ block.settings.icon_text_gap }}px;"
+  style="gap: {{ block.settings.icon_text_gap }}px; justify-content: {{ block.settings.horizontal_alignment }};"
   {{ block.shopify_attributes }}
 >
   {% if block.settings.icon != blank %}
@@ -33,7 +33,6 @@
   .default-banner {
     display: flex;
     align-items: center;
-    justify-content: center;
   }
 {% endstylesheet %}
 
@@ -50,6 +49,26 @@
       "step": 2,
       "default": 8,
       "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment",
+      "label": "t:settings.alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "flex-start"
     },
     {
       "type": "image_picker",
