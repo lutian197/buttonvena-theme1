@@ -150,12 +150,12 @@
     --gallery-aspect-ratio: {{ ratio }};
   "
   data-product-id="{{ product.id }}"
-  {% comment %}
-    {% if settings.show_second_image_on_hover %}
-      on:pointerenter="/previewImage"
-      on:pointerleave="/resetImage"
-    {% endif %}
-  {% endcomment %}
+
+  {% if settings.show_second_image_on_hover %}
+    on:pointerenter="/previewImage"
+    on:pointerleave="/resetImage"
+  {% endif %}
+
   {% if settings.transition_to_main_product %}
     data-view-transition-to-main-product
   {% endif %}
@@ -192,7 +192,7 @@
       endif
 
       capture slides
-        for media in media_list_to_show
+        for media in media_list_to_show limit: max_visible_slide_count
           assign loading = 'lazy'
           assign sizes = 'auto, ' | append: image_sizes
 
@@ -218,20 +218,20 @@
 
           # Performance improvement: don't render more than 5 visible images into the slideshow
           # We'll keep the images that we need for the variant images and hover next.
-          if forloop.first
-            assign visible_slide_count = 0
-          endif
-          unless hidden
-            assign visible_slide_count = visible_slide_count | plus: 1
-          endunless
-          if hidden == false and visible_slide_count > max_visible_slide_count
-            continue
-          endif
+          # if forloop.first
+          #  assign visible_slide_count = 0
+          # endif
+          # unless hidden
+          #  assign visible_slide_count = visible_slide_count | plus: 1
+          # endunless
+          # if hidden == false and visible_slide_count > max_visible_slide_count
+          #  continue
+          # endif
 
-          if forloop.first and section.index == null or section.index < 5
-            assign loading = 'eager'
-            assign sizes = image_sizes
-          endif
+          # if forloop.first and section.index == null or section.index < 5
+          #  assign loading = 'eager'
+          #  assign sizes = image_sizes
+          # endif
 
           assign class = 'product-media-container media-fit product-media-container--[media_type]' | replace: '[media_type]', media.media_type
           if constrain_to_viewport
